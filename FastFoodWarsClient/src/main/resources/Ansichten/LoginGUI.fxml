@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<!--
+***
+*** Autoren: Christoph Wohlers, Michael Schwenk, Jan Tilger
+***
+  -->
+
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.GUI.LoginGUI">
+    <children>
+        <Pane prefHeight="1000.0" prefWidth="1700.0" styleClass="darkPane" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <children>
+                <TextField id="login" fx:id="loginnameLogin" layoutX="159.0" layoutY="277.0" prefHeight="23.94140625" prefWidth="160.5078125" promptText="Loginname" />
+                <PasswordField id="passwordLogin" fx:id="passwortLogin" layoutX="159.0" layoutY="334.0" prefWidth="160.5078125" promptText="Passwort" />
+                <Button fx:id="loginButton" layoutX="199.0" layoutY="380.0" mnemonicParsing="false" onAction="#handleButtonActionLogin" prefHeight="23.94140625" prefWidth="81.0" text="Login" />
+                <TextField id="login" fx:id="loginnameRegistrieren" layoutX="535.0" layoutY="200.0" prefHeight="23.94140625" prefWidth="160.5078125" promptText="Loginname" />
+                <PasswordField fx:id="passwortRegistrieren" layoutX="535.0" layoutY="242.0" prefWidth="160.5078125" promptText="Passwort" />
+                <PasswordField fx:id="passwortWiederholenRegistrieren" layoutX="535.0" layoutY="287.0" prefHeight="25.0" prefWidth="161.0" promptText="Passwort wiederholen" />
+                <RadioButton fx:id="waehleDiktator" layoutX="776.0" layoutY="292.0" mnemonicParsing="false" text="Ich bin ein Diktator!" />
+                <RadioButton fx:id="waehleKumpeltyp" layoutX="963.0" layoutY="292.0" mnemonicParsing="false" text="Ich bin euer Kumpel!" />
+                <RadioButton id="KFCWahl" fx:id="waehleKFC" layoutX="453.0" layoutY="594.0" mnemonicParsing="false" text="Ich will zu KFC!" />
+                <RadioButton id="McKingWahl" fx:id="waehleMcKing" layoutX="721.0" layoutY="594.0" mnemonicParsing="false" text="Ich will zu McKing!" />
+                <RadioButton id="PizzaCapWahl" fx:id="waehlePizzaCap" layoutX="999.0" layoutY="594.0" mnemonicParsing="false" text="Ich will zu Pizza Cap!" />
+                <Button fx:id="registrierenButton" layoutX="1166.0" layoutY="207.0" mnemonicParsing="false" onAction="#handleButtonActionRegistrieren" prefHeight="23.94140625" prefWidth="93.0" text="Registrieren" />
+                <ImageView fitHeight="246.0" fitWidth="437.3333488433324" layoutX="391.0" layoutY="-50.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Bilder/FoodWars.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="63.0" fitWidth="63.0" layoutX="472.0" layoutY="372.0" opacity="0.56" pickOnBounds="true" preserveRatio="true" visible="true">
+                    <image>
+                        <Image url="@../Bilder/KarstenFCLogo.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="59.0" layoutY="276.0" prefHeight="23.94140625" prefWidth="100.0" text="Loginname">
+                    <font>
+                        <Font name="System Bold" size="15.0" fx:id="x1" />
+                    </font>
+                </Label>
+                <Label font="$x1" layoutX="75.0" layoutY="336.0" text="Passwort" />
+                <Label layoutX="52.0" layoutY="223.0" text="Bereits registriert? Log dich ein!">
+                    <font>
+                        <Font name="System Bold Italic" size="18.0" fx:id="x2" />
+                    </font>
+                    <textFill>
+                        <Color blue="0.800" green="0.000" red="0.064" fx:id="x3" />
+                    </textFill>
+                </Label>
+                <Label id="erfolgsLabel" fx:id="erfolgsLabelLogin" layoutX="65.0" layoutY="414.0" prefHeight="43.0" prefWidth="255.0" rotate="0.0" styleClass="redText" text="">
+                    <font>
+                        <Font size="14.0" fx:id="x8" />
+                    </font>
+                    <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite-Label.css" />
+                    </stylesheets>
+                </Label>
+                <Label font="$x2" layoutX="435.0" layoutY="143.0" text="Neu hier? Registrier dich!" textFill="$x3" />
+                <Label font="$x1" layoutX="426.0" layoutY="199.0" prefHeight="23.94140625" prefWidth="81.0" text="Loginname" />
+                <Label font="$x1" layoutX="440.0" layoutY="242.0" text="Passwort" />
+                <Label font="$x1" layoutX="402.0" layoutY="288.0" text="Passwort wied." />
+                <Label layoutX="390.0" layoutY="341.0" text="Waehle deine Fraktion">
+                    <font>
+                        <Font name="System Bold Italic" size="15.0" fx:id="x6" />
+                    </font>
+                    <textFill>
+                        <Color blue="0.800" green="0.000" red="0.063" fx:id="x7" />
+                    </textFill>
+                </Label>
+                <Label layoutX="402.0" layoutY="435.0" text="Karstens Frittierte Chemiehuehnchen" textFill="#000833">
+                    <font>
+                        <Font name="System Bold Italic" size="12.0" fx:id="x4" />
+                    </font>
+                </Label>
+                <TextArea id="KFCText" fx:id="kfcText" editable="false" focusTraversable="false" layoutX="402.0" layoutY="459.0" prefHeight="118.0" prefWidth="200.0" text="Wenn du auf Huehnchen stehst, dann bist du hier genau richtig. Zart, saftig und kross. Unsere  Huehnchen  werden  frisch  aus  der  Massenhaltung  geliefert.  Du  fragst  dich  warum  unsere Nuggets so saftig sind? Unser Geheimnis ist es, nur die jungen Kueken zu verarbeiten. Das Geheimnis fuer wahren Genuss!&#10;" wrapText="true" />
+                <ImageView fitHeight="79.0" fitWidth="87.0" layoutX="750.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Bilder/foodwarsmcking.png" />
+                    </image>
+                </ImageView>
+                <Label font="$x4" layoutX="770.0" layoutY="435.0" text="McKing">
+                    <textFill>
+                        <Color blue="0.200" green="0.031" red="0.000" fx:id="x5" />
+                    </textFill>
+                </Label>
+                <TextArea id="McKingText" fx:id="mckingText" editable="false" focusTraversable="false" layoutX="681.0" layoutY="459.0" prefHeight="118.0" prefWidth="200.0" text="McKing, der Koenig unter den Burgerunternehmen. Vom einfachen Hamburger bis zum drei- und vierfach belegten super doppelt ultra Burger ist alles dabei was dein Herz begehrt. Auch Beilagen wie Pommes werden naturlich nicht vergessen." wrapText="true" />
+                <ImageView fitHeight="79.0" fitWidth="87.0" layoutX="1013.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Bilder/pizzacap.png" />
+                    </image>
+                </ImageView>
+                <TextArea id="PizzaCapText" fx:id="pizzacapText" editable="false" focusTraversable="false" layoutX="956.0" layoutY="459.0" prefHeight="118.0" prefWidth="200.0" text="Do you wanna have Pizza? Hier hast du so viel, wie du Essen kannst. Wir produzieren mit luftigem Pizzateig aus frischem Mehl perfekte und vollkommene original italienische Pizzen direkt vom Fliessband. Unser geniales Tomatenaroma frisch aus unseren Laboren lasst dich dieses Geschmackserlebnis niemals vergessen. Ob du nur einfache Margherita Pizza magst oder doch liebereine extravagante. Wir stellen dir deine Wunschpizza zusammen.Buon appetito!" wrapText="true" />
+                <Label font="$x4" layoutX="1028.0" layoutY="435.0" text="Pizza Cap" textFill="$x5" />
+                <Line endX="-98.0" endY="500.0" layoutX="461.0" layoutY="129.0" startX="-99.0" />
+                <Label font="$x6" layoutX="817.0" layoutY="141.0" text="Waehle deinen Charakter, Chef" textFill="$x7" />
+                <Label font="$x4" layoutX="854.0" layoutY="212.0" text="Diktator" textFill="$x5" />
+                <Label font="$x4" layoutX="1001.0" layoutY="176.0" text="Kumpeltyp" textFill="$x5" />
+                <TextArea fx:id="diktatorText" editable="false" focusTraversable="false" layoutX="772.0" layoutY="204.0" prefHeight="71.0" prefWidth="138.0" text="Als Diktator regierst du dein Unternehmen mit eiserner Hand, dass hat eine gesteigerte Produktivitat zur Folge. Allerdings geben deine Truppen im Kampf nicht ihr letztes." wrapText="true" />
+                <TextArea fx:id="kumpeltypText" editable="false" focusTraversable="false" layoutX="963.0" layoutY="204.0" prefHeight="71.0" prefWidth="138.0" text="Als Kumpeltyp weisst du deine Truppen so zu motivieren, dass sie ihr letztes Hemd bzw. ihr letztes Salatblatt oder ihren letzten mit Kaese gefuellten Pizzarand fuer dich geben. Die Folge deines laschen Umgangs sind allerdings Produktionseinbuss&#10;en." wrapText="true" />
+                <Text layoutX="1127.0" layoutY="139.0" scaleX="1.1342269639356222" scaleY="1.1175060149087785" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+                <Label font="$x4" layoutX="808.0" layoutY="176.0" text="Diktator" textFill="$x5" />
+                <Label font="$x4" layoutX="1146.0" layoutY="161.0" prefHeight="42.9412841796875" prefWidth="151.0" text="Alle Angaben gemacht?" textFill="$x5" />
+                <Line endX="269.0" endY="0.0" layoutX="850.0" layoutY="134.0" startX="-99.0" startY="1.0" />
+                <Line endX="269.0" endY="0.0" layoutX="850.0" layoutY="334.0" startX="-100.0" />
+                <Line endX="353.0" endY="-141.0" layoutX="765.0" layoutY="475.0" startX="354.0" startY="-341.0" />
+                <Line endX="354.0" endY="-142.0" layoutX="397.0" layoutY="476.0" startX="354.0" startY="-341.0" />
+                <Line endX="353.0" endY="-58.0" layoutX="813.0" layoutY="683.0" startX="354.0" startY="-341.0" />
+                <Line endX="269.0" endY="0.0" layoutX="898.0" layoutY="342.0" startX="-517.0" startY="0.0" />
+                <Line endX="269.0" endY="0.0" layoutX="896.0" layoutY="625.0" startX="-517.0" startY="0.0" />
+                <Line endX="353.0" endY="-58.0" layoutX="26.0" layoutY="683.0" startX="354.0" startY="-341.0" />
+                <Label id="erfolgsLabel" fx:id="erfolgsLabelRegistrieren" font="$x8" layoutX="1127.0" layoutY="251.0" prefHeight="43.0" prefWidth="409.0" rotate="0.0" styleClass="redText" text="">
+                    <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite-Label.css" />
+                    </stylesheets>
+                </Label>
+                <ImageView fx:id="ladeBalken" fitHeight="135.0" fitWidth="255.0" layoutX="84.0" layoutY="441.0" pickOnBounds="true" preserveRatio="true" />
+                <Label layoutX="412.0" layoutY="665.0" text="Server-IP:">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="serverIPFeld" layoutX="529.0" layoutY="666.0" promptText="Server-IP" text="localhost" />
+                <Label layoutX="793.0" layoutY="665.0" text="Server-Port:">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="serverPortFeld" layoutX="935.0" layoutY="666.0" promptText="Server-Port" text="4444" />
+                <Label fx:id="serverAdresseLabel" layoutX="572.0" layoutY="721.0" text="Um die Server-Adresse zu aendern, starten Sie bitte den Client neu!" />
+            </children>
+            <stylesheets>
+                <URL value="@../CSS/IssueTrackingLite-LoginScreen.css" />
+            </stylesheets>
+        </Pane>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+</GridPane>

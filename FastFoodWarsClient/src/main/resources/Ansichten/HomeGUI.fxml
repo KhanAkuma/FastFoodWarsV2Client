@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<!--
+***
+*** Autoren: Christoph Wohlers, Michael Schwenk, Jan Tilger
+***
+  -->
+
+<GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1383.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Client.GUI.HomeGUI">
+  <children>
+    <Pane prefHeight="1000.0" prefWidth="1700.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+      <children>
+        <TabPane fx:id="tabpane" layoutX="0.0" layoutY="0.0" prefHeight="825.0" prefWidth="1382.0" styleClass="darkPane" tabClosingPolicy="UNAVAILABLE">
+          <stylesheets>
+            <URL value="@../CSS/IssueTrackingLite.css" />
+          </stylesheets>
+          <tabs>
+            <Tab fx:id="homeTab" onSelectionChanged="#homeTabWahl" text="Home">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="976.0" prefWidth="1348.0" styleClass="darkPane">
+                  <children>
+                    <VBox id="VBox Nachrichten" alignment="CENTER" layoutX="453.0" layoutY="16.0" prefHeight="619.0" prefWidth="353.0" spacing="5.0">
+                      <children>
+                        <Label text="Letzte Nachrichten">
+                          <font>
+                            <Font name="System Bold Italic" size="15.0" fx:id="x1" />
+                          </font>
+                        </Label>
+                        <TableView fx:id="neueNachrichtenID" editable="true" prefHeight="499.0" prefWidth="313.0000999999975" tableMenuButtonVisible="false">
+                          <columns>
+                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="97.0" resizable="false" text="Absender" fx:id="absenderID" />
+                            <TableColumn id="NachrichtID" maxWidth="5000.0" minWidth="800.0" prefWidth="800.0" resizable="false" sortable="true" text="Nachricht" fx:id="nachrichtID" />
+                          </columns>
+                          <stylesheets>
+                            <URL value="@../CSS/IssueTrackingLite-Listen.css" />
+                          </stylesheets>
+                        </TableView>
+                      </children>
+                    </VBox>
+                    <VBox id="VBox Standorte" alignment="CENTER" layoutX="29.0" layoutY="32.0" spacing="5.0">
+                      <children>
+                        <Label font="$x1" text="Deine Standorte" />
+                        <ListView id="Standorte" fx:id="standorteID" cache="false" disable="false" onMouseClicked="#handleMouseClickStandortListe" orientation="VERTICAL" prefHeight="183.0" prefWidth="353.0" styleClass="darkList">
+                          <stylesheets>
+                            <URL value="@../CSS/IssueTrackingLite.css" />
+                          </stylesheets>
+                        </ListView>
+                      </children>
+                    </VBox>
+                    <VBox id="VBox Truppenbewegungen" alignment="CENTER" layoutX="879.0" layoutY="32.0" prefHeight="582.0" prefWidth="445.0" spacing="5.0">
+                      <children>
+                        <Label font="$x1" text="Truppenbewegungen" />
+                        <TableView fx:id="bewegungTabelle" prefHeight="499.0" prefWidth="353.0" styleClass="darkTable">
+                          <columns>
+                            <TableColumn prefWidth="110.0" resizable="false" text="Startort" fx:id="startSpalte" />
+                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" resizable="false" text="Zielort" fx:id="zielSpalte" />
+                            <TableColumn prefWidth="110.0" resizable="false" text="Ankunft" fx:id="ankunftSpalte" />
+                            <TableColumn prefWidth="110.0" resizable="false" text="Art" fx:id="artSpalte" />
+                          </columns>
+                        </TableView>
+                      </children>
+                    </VBox>
+                    <Button id="aktualisiereHome" fx:id="aktualisiere1" layoutX="604.0" layoutY="646.0" mnemonicParsing="false" onAction="#aktualisiereGUI" text="Aktualisieren" />
+                    <Button fx:id="logoutButton" layoutX="619.0" layoutY="711.0" mnemonicParsing="false" onAction="#logoutAction" text="Logout" />
+                    <TableView fx:id="boniHomeTabelle" layoutX="29.0" layoutY="252.0" prefHeight="335.0" prefWidth="355.0">
+                      <columns>
+                        <TableColumn prefWidth="250.0" resizable="false" text="Boni" fx:id="boniNameSpalte" />
+                        <TableColumn prefWidth="100.0" resizable="false" text="Werte" fx:id="boniWertSpalte" />
+                      </columns>
+                    </TableView>
+                  </children>
+                  <stylesheets>
+                    <URL value="@../CSS/IssueTrackingLite-Listen.css" />
+                  </stylesheets>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="standortTab" text="Standort">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="darkPane">
+                  <children>
+                    <Group id="Group" fx:id="standortLeiste" layoutX="86.0" layoutY="41.0">
+                      <children>
+                        <Button fx:id="vorherigerStandort" layoutX="4.0" layoutY="0.0" mnemonicParsing="false" onAction="#handleButtonActionVorherigerStandort" prefWidth="185.86991201171622" text="&lt; Vorheriger Standort" />
+                        <Button fx:id="naechsterStandort" layoutX="618.0" layoutY="0.0" mnemonicParsing="false" onAction="#handleButtonActionNaechsterStandort" prefWidth="185.86993408203125" text="Naechstes Standort &gt;" />
+                      </children>
+                    </Group>
+                    <Group id="Group" fx:id="standortGroup" layoutX="85.0" layoutY="123.0" />
+                    <Line endX="-104.0" endY="642.0" layoutX="1068.0" layoutY="39.0" startX="-103.0" startY="-39.0" />
+                    <Group id="Group" fx:id="ressourcenGroup" layoutX="981.0" layoutY="46.0">
+                      <children>
+                        <Label font="$x1" layoutX="0.0" layoutY="0.0" text="Ressourcen" />
+                      </children>
+                    </Group>
+                    <ImageView fx:id="basisBauplatz" fitHeight="449.70703125" fitWidth="199.8697900188794" layoutX="90.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz1" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="290.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz4" fitHeight="150.0" fitWidth="200.0" layoutX="290.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz7" fitHeight="150.0" fitWidth="200.0" layoutX="290.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz2" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="490.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz5" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="490.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz8" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="490.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz3" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="690.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz6" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="690.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="bauplatz9" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="690.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true" />
+                    <Label fx:id="levelplatz1" layoutX="423.0" layoutY="182.0" prefWidth="24.0" text="" textFill="WHITE">
+                      <font>
+                        <Font name="System Bold" size="15.0" fx:id="x4" />
+                      </font>
+                    </Label>
+                    <Label fx:id="levelplatz4" font="$x4" layoutX="423.0" layoutY="332.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz7" font="$x4" layoutX="423.0" layoutY="482.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz2" font="$x4" layoutX="623.0" layoutY="182.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz5" font="$x4" layoutX="623.0" layoutY="332.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz8" font="$x4" layoutX="623.0" layoutY="482.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz3" font="$x4" layoutX="822.0" layoutY="182.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz6" font="$x4" layoutX="823.0" layoutY="332.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Label fx:id="levelplatz9" font="$x4" layoutX="822.0" layoutY="482.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Button fx:id="aufwerten0" layoutX="414.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten">
+                      <font>
+                        <Font size="10.0" fx:id="x5" />
+                      </font>
+                    </Button>
+                    <Button fx:id="aufwerten3" font="$x5" layoutX="414.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Button fx:id="aufwerten6" font="$x5" layoutX="414.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Button fx:id="aufwerten1" font="$x5" layoutX="616.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="63.0" text="Aufwerten" />
+                    <Button fx:id="aufwerten4" font="$x5" layoutX="616.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Button fx:id="aufwerten7" font="$x5" layoutX="616.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Button fx:id="aufwerten2" font="$x5" layoutX="815.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Button fx:id="aufwerten5" font="$x5" layoutX="815.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Button fx:id="aufwerten8" font="$x5" layoutX="815.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleButtonActionAufwerten" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <ListView fx:id="aufwertenListe0" cache="false" disable="false" editable="false" layoutX="414.0" layoutY="210.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="80.0" prefWidth="130.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa0" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe1" cache="false" disable="false" editable="false" layoutX="616.0" layoutY="210.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa1" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe2" cache="false" disable="false" editable="false" layoutX="815.0" layoutY="210.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa2" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe3" cache="false" disable="false" editable="false" layoutX="414.0" layoutY="362.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa3" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe4" cache="false" disable="false" editable="false" layoutX="617.0" layoutY="362.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa4" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe5" cache="false" disable="false" editable="false" layoutX="813.0" layoutY="361.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa5" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe6" cache="false" disable="false" editable="false" layoutX="414.0" layoutY="512.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa6" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe7" cache="false" disable="false" editable="false" layoutX="616.0" layoutY="512.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa7" />
+                      </tooltip>
+                    </ListView>
+                    <ListView fx:id="aufwertenListe8" cache="false" disable="false" editable="false" layoutX="815.0" layoutY="512.0" onMouseClicked="#handleMouseClickAufwertenListe" onMouseExited="#handleMouseExitAufwertenListe" orientation="VERTICAL" prefHeight="205.0" prefWidth="135.0" styleClass="darkList" visible="false">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" fx:id="tooltipa8" />
+                      </tooltip>
+                    </ListView>
+                    <Label id="levelplatz1" fx:id="levelplatzBasis" font="$x4" layoutX="240.0" layoutY="247.0" prefWidth="24.0" text="" textFill="WHITE" />
+                    <Button id="aufwerten0" fx:id="aufwertenBasis" font="$x5" layoutX="213.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleButtonActionAufwertenHG" prefHeight="22.0" prefWidth="62.0001220703125" text="Aufwerten" />
+                    <Line endX="11.0" endY="40.0" layoutX="955.0" layoutY="170.0" startX="333.0" startY="40.0" />
+                    <Group id="Group" fx:id="veggieGroup" layoutX="985.0" layoutY="164.0">
+                      <children>
+                        <ImageView fitHeight="23.568721244597846" fitWidth="34.649269104003906" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@../Bilder/salad.png" />
+                          </image>
+                        </ImageView>
+                        <Label layoutX="43.0" layoutY="4.0" text="Gemuese">
+                          <font>
+                            <Font name="System Bold Italic" size="12.0" fx:id="x2" />
+                          </font>
+                        </Label>
+                        <Label id="mehlAnzahl" fx:id="veggieAnzahlID" layoutX="130.0" layoutY="4.0" text="veggieAnzahl">
+                          <font>
+                            <Font name="System Bold" size="12.0" fx:id="x3" />
+                          </font>
+                        </Label>
+                      </children>
+                    </Group>
+                    <Group id="Group" fx:id="fleischGroup" layoutX="985.0" layoutY="122.0">
+                      <children>
+                        <ImageView fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@../Bilder/meat.png" />
+                          </image>
+                        </ImageView>
+                        <Label font="$x2" layoutX="44.0" layoutY="3.0" text="Fleisch" />
+                        <Label id="mehlAnzahl" fx:id="fleischAnzahlID" font="$x3" layoutX="131.0" layoutY="3.0" text="fleischlAnzahl" />
+                      </children>
+                    </Group>
+                    <Group id="Group" fx:id="mehlGroup" layoutX="985.0" layoutY="85.0">
+                      <children>
+                        <ImageView fitHeight="20.99999237060547" fitWidth="37.197295156838386" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                            <Image url="@../Bilder/flour.png" />
+                          </image>
+                        </ImageView>
+                        <Label font="$x2" layoutX="44.0" layoutY="2.0" text="Mehl" />
+                        <Label id="mehlAnzahl" fx:id="mehlAnzahlID" font="$x3" layoutX="131.0" layoutY="2.0" text="mehlAnzahl" />
+                      </children>
+                    </Group>
+                    <Group id="Group" fx:id="mtGroup" layoutX="981.0" layoutY="432.0" visible="true">
+                      <children>
+                        <Group id="Group" layoutX="4.0" layoutY="26.0">
+                          <children>
+                            <ImageView id="leichteTruppen1Anzahl" fx:id="mt1Bild" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image url="@../Bilder/meat.png" />
+                              </image>
+                            </ImageView>
+                            <Label id="leichteTruppen2" fx:id="mt1" font="$x2" layoutX="44.0" layoutY="3.0" text="LT2" />
+                            <Label id="mehlAnzahl" fx:id="mt1Anzahl" font="$x3" layoutX="124.0" layoutY="3.0" prefWidth="37.197265625" text="LT2Anzahl" visible="true" />
+                            <Button fx:id="mt1Plus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                              <tooltip>
+                                <Tooltip text="Empty Tooltip" fx:id="tooltipp2" />
+                              </tooltip>
+                            </Button>
+                            <Button fx:id="mt1Minus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                            <Label id="mehlAnzahl" fx:id="mt1Dazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                            <Button fx:id="mt1Ok" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK">
+                              <font>
+                                <Font size="7.0" fx:id="x6" />
+                              </font>
+                            </Button>
+                            <Label id="mehlAnzahl" fx:id="mt1iaAnzahl" font="$x3" layoutX="307.0" layoutY="4.0" prefHeight="17.291015625" prefWidth="67.0" text="XXX" />
+                            <Label id="mehlAnzahl" fx:id="mt2iaAnzahl" font="$x3" layoutX="307.0" layoutY="35.0" prefHeight="23.5687255859375" prefWidth="67.0" text="XXX" />
+                          </children>
+                        </Group>
+                        <Group id="Group" layoutX="4.0" layoutY="62.0">
+                          <children>
+                            <ImageView id="leichteTruppen1Anzahl" fx:id="mt2Bild" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image url="@../Bilder/meat.png" />
+                              </image>
+                            </ImageView>
+                            <Label id="leichteTruppen2" fx:id="mt2" font="$x2" layoutX="44.0" layoutY="3.0" text="LT2" />
+                            <Label id="mehlAnzahl" fx:id="mt2Anzahl" font="$x3" layoutX="124.0" layoutY="3.0" prefWidth="37.197265625" text="LT2Anzahl" />
+                            <Button fx:id="mt2Plus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                              <tooltip>
+                                <Tooltip text="Empty Tooltip" fx:id="tooltipp3" />
+                              </tooltip>
+                            </Button>
+                            <Button fx:id="mt2Minus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                            <Label id="mehlAnzahl" fx:id="mt2Dazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                            <Button fx:id="mt2Ok" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" />
+                          </children>
+                        </Group>
+                        <Label layoutX="0.0" layoutY="0.0" text="Mittlere Truppen">
+                          <font>
+                            <Font name="System Bold Italic" size="13.0" fx:id="x7" />
+                          </font>
+                        </Label>
+                      </children>
+                    </Group>
+                    <Group id="Group" fx:id="stGroup" layoutX="981.0" layoutY="523.0">
+                      <children>
+                        <Group id="Group" layoutX="0.0" layoutY="0.0" visible="true">
+                          <children>
+                            <Group id="Group" layoutX="4.0" layoutY="26.0" visible="true">
+                              <children>
+                                <Group id="Group" layoutX="0.0" layoutY="0.0">
+                                  <children>
+                                    <ImageView id="leichteTruppen1Anzahl" fx:id="st1Bild" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@../Bilder/meat.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Label id="leichteTruppen2" fx:id="st1" font="$x2" layoutX="44.0" layoutY="3.0" text="LT2" />
+                                    <Label id="mehlAnzahl" fx:id="st1Anzahl" font="$x3" layoutX="124.0" layoutY="3.0" prefWidth="37.197265625" text="LT2Anzahl" />
+                                    <Button fx:id="st1Plus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                                      <tooltip>
+                                        <Tooltip text="Empty Tooltip" fx:id="tooltipp4" />
+                                      </tooltip>
+                                    </Button>
+                                    <Button fx:id="st1Minus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                                    <Label id="mehlAnzahl" fx:id="st1Dazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                                    <Button fx:id="st1Ok" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" />
+                                    <Label id="mehlAnzahl" fx:id="st1iaAnzahl" font="$x3" layoutX="307.0" layoutY="1.0" prefHeight="17.291015625" prefWidth="67.0" text="XXX" />
+                                    <Label id="mehlAnzahl" fx:id="st2iaAnzahl" font="$x3" layoutX="307.0" layoutY="35.0" prefHeight="23.5687255859375" prefWidth="67.0" text="XXX" />
+                                  </children>
+                                </Group>
+                                <Group id="Group" layoutX="0.0" layoutY="36.0">
+                                  <children>
+                                    <ImageView id="leichteTruppen1Anzahl" fx:id="st2Bild" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@../Bilder/meat.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Label id="leichteTruppen2" fx:id="st2" font="$x2" layoutX="44.0" layoutY="3.0" text="LT2" />
+                                    <Label id="mehlAnzahl" fx:id="st2Anzahl" font="$x3" layoutX="124.0" layoutY="3.0" prefWidth="37.197265625" text="LT2Anzahl" />
+                                    <Button fx:id="st2Plus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                                      <tooltip>
+                                        <Tooltip text="Empty Tooltip" fx:id="tooltipp5" />
+                                      </tooltip>
+                                    </Button>
+                                    <Button fx:id="st2Minus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                                    <Label id="mehlAnzahl" fx:id="st2Dazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                                    <Button fx:id="st2Ok" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" />
+                                  </children>
+                                </Group>
+                              </children>
+                            </Group>
+                            <Label font="$x7" layoutX="0.0" layoutY="0.0" text="Schwere Truppen" />
+                          </children>
+                        </Group>
+                      </children>
+                    </Group>
+                    <Label layoutX="1119.0" layoutY="14.0" prefHeight="17.0" prefWidth="70.0" text="Kapazitaet:">
+                      <font>
+                        <Font name="System Bold" size="13.0" />
+                      </font>
+                    </Label>
+                    <Label fx:id="kapazitaetLabel" layoutX="1194.0" layoutY="15.0" prefHeight="17.0" prefWidth="59.0" text="Label" />
+                    <ImageView id="bauplatz1" fx:id="imBau1" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="290.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz2" fx:id="imBau2" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="490.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz3" fx:id="imBau3" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="690.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz4" fx:id="imBau4" fitHeight="150.0" fitWidth="200.0" layoutX="290.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz5" fx:id="imBau5" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="490.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz6" fx:id="imBau6" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="690.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz7" fx:id="imBau7" fitHeight="150.0" fitWidth="200.0" layoutX="290.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz8" fx:id="imBau8" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="490.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <ImageView id="bauplatz9" fx:id="imBau9" fitHeight="150.00009999999747" fitWidth="200.00013333332996" layoutX="690.0" layoutY="417.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <Group id="Group" fx:id="ltGroup" layoutX="981.0" layoutY="221.0">
+                      <children>
+                        <Group id="Group" layoutX="0.0" layoutY="0.0">
+                          <children>
+                            <Group id="Group" layoutX="0.0" layoutY="0.0" scaleX="1.0" scaleY="1.0">
+                              <children>
+                                <Label font="$x1" layoutX="0.0" layoutY="0.0" text="Truppen" />
+                              </children>
+                            </Group>
+                            <Group id="Group" layoutX="0.0" layoutY="120.0">
+                              <children>
+                                <Group id="Group" layoutX="4.0" layoutY="25.0">
+                                  <children>
+                                    <ImageView id="leichteTruppen1Anzahl" fx:id="lt1Bild" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@../Bilder/meat.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Label id="leichteTruppen2" fx:id="lt1" font="$x2" layoutX="44.0" layoutY="3.0" text="LT2" />
+                                    <Label id="mehlAnzahl" fx:id="lt1Anzahl" font="$x3" layoutX="126.0" layoutY="3.0" prefWidth="34.6492919921875" text="LT2Anzahl" />
+                                    <Button fx:id="lt1Plus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                                      <tooltip>
+                                        <Tooltip text="Empty Tooltip" fx:id="tooltipp0" />
+                                      </tooltip>
+                                    </Button>
+                                    <Button fx:id="lt1Minus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                                    <Label id="mehlAnzahl" fx:id="lt1Dazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                                    <Button id="lt1ok" fx:id="lt1Ok" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" visible="true" />
+                                  </children>
+                                </Group>
+                                <Group id="Group" layoutX="4.0" layoutY="61.0">
+                                  <children>
+                                    <ImageView id="leichteTruppen1Anzahl" fx:id="lt2Bild" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@../Bilder/meat.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Label id="leichteTruppen2" fx:id="lt2" font="$x2" layoutX="44.0" layoutY="3.0" text="LT2" />
+                                    <Label id="mehlAnzahl" fx:id="lt2Anzahl" font="$x3" layoutX="126.0" layoutY="3.0" prefWidth="34.6492919921875" text="LT2Anzahl" />
+                                    <Button fx:id="lt2Plus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                                      <tooltip>
+                                        <Tooltip text="Empty Tooltip" fx:id="tooltipp1" />
+                                      </tooltip>
+                                    </Button>
+                                    <Button fx:id="lt2Minus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                                    <Label id="mehlAnzahl" fx:id="lt2Dazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                                    <Button fx:id="lt2Ok" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" />
+                                  </children>
+                                </Group>
+                                <Label font="$x7" layoutX="0.0" layoutY="0.0" minHeight="15.9609375" prefHeight="15.9609375" text="Leichte Truppen" />
+                                <Label id="mehlAnzahl" fx:id="lt1iaAnzahl" font="$x3" layoutX="311.0" layoutY="29.0" prefHeight="17.291015625" prefWidth="63.0" text="XXX" />
+                                <Label id="mehlAnzahl" fx:id="lt2iaAnzahl" font="$x3" layoutX="311.0" layoutY="63.0" prefHeight="17.291015625" prefWidth="63.0" text="XXX" />
+                              </children>
+                            </Group>
+                            <Group id="Group" layoutX="0.0" layoutY="29.0">
+                              <children>
+                                <Group id="Group" layoutX="4.0" layoutY="25.0">
+                                  <children>
+                                    <ImageView id="leichteTruppen1Anzahl" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@../Bilder/salver.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Label id="leichteTruppen2" font="$x2" layoutX="44.0" layoutY="3.0" text="Tablet" />
+                                    <Label id="mehlAnzahl" fx:id="tabletAnzahl" font="$x3" layoutX="126.0" layoutY="3.0" prefWidth="34.6492919921875" text="LT2Anzahl" />
+                                    <Button id="lt1Plus" fx:id="tabletPlus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                                      <tooltip>
+                                        <Tooltip text="Empty Tooltip" fx:id="tooltipp6" />
+                                      </tooltip>
+                                    </Button>
+                                    <Button id="lt1Minus" fx:id="tabletMinus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                                    <Label id="mehlAnzahl" fx:id="tabletDazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                                    <Button id="lt1ok" fx:id="tabletOk" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" visible="true" />
+                                  </children>
+                                </Group>
+                                <Group id="Group" layoutX="4.0" layoutY="61.0">
+                                  <children>
+                                    <ImageView id="leichteTruppen1Anzahl" fitHeight="22.333858708664774" fitWidth="37.197265625" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                                      <image>
+                                        <Image url="@../Bilder/truck.png" />
+                                      </image>
+                                    </ImageView>
+                                    <Label id="leichteTruppen2" font="$x2" layoutX="44.0" layoutY="3.0" text="LKW" />
+                                    <Label id="mehlAnzahl" fx:id="lkwAnzahl" font="$x3" layoutX="126.0" layoutY="3.0" prefWidth="34.6492919921875" text="LT2Anzahl" />
+                                    <Button id="lt2Plus" fx:id="lkwPlus" font="$x5" layoutX="165.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="24.0" text="+">
+                                      <tooltip>
+                                        <Tooltip text="Empty Tooltip" fx:id="tooltipp7" />
+                                      </tooltip>
+                                    </Button>
+                                    <Button id="lt2Minus" fx:id="lkwMinus" font="$x5" layoutX="191.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenMinus" prefHeight="21.0" prefWidth="24.0" text="-" />
+                                    <Label id="mehlAnzahl" fx:id="lkwDazu" font="$x3" layoutX="223.0" layoutY="4.0" prefWidth="39.0" text="XXX" />
+                                    <Button id="lt2Ok" fx:id="lkwOk" font="$x6" layoutX="255.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenOk" prefHeight="21.0" prefWidth="24.0" text="OK" />
+                                  </children>
+                                </Group>
+                                <Label font="$x7" layoutX="0.0" layoutY="0.0" minHeight="15.9609375" prefHeight="15.9609375" text="Transport Truppen" />
+                                <Label id="mehlAnzahl" fx:id="tabletiaAnzahl" font="$x3" layoutX="311.0" layoutY="29.0" prefHeight="17.291015625" prefWidth="63.0" text="XXX" />
+                                <Label id="mehlAnzahl" fx:id="lkwiaAnzahl" font="$x3" layoutX="311.0" layoutY="63.0" prefHeight="17.291015625" prefWidth="63.0" text="XXX" />
+                              </children>
+                            </Group>
+                          </children>
+                        </Group>
+                        <Label font="$x2" layoutX="169.0" layoutY="29.0" prefHeight="15.9609375" text="Truppen hinzufuegen" />
+                        <Label font="$x2" layoutX="290.0" layoutY="29.0" minHeight="13.9609375" prefHeight="15.9609375" prefWidth="93.5" text="In Ausbildung" />
+                      </children>
+                    </Group>
+                    <Label id="leichteTruppen2" fx:id="ausbildungAbgebrochen" font="$x2" layoutX="1074.0" layoutY="224.0" prefWidth="285.0" text="Ausbildung abgebrochen!  Zu wenig Ressourcen!" visible="false">
+                      <textFill>
+                        <Color blue="0.000" green="0.000" red="0.800" fx:id="x11" />
+                      </textFill>
+                    </Label>
+                    <ImageView id="bauplatz1" fx:id="imBauBasis" fitHeight="141.00001525878906" fitWidth="187.99998756045318" layoutX="90.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+                    <Group id="Group" fx:id="superGroup" layoutX="1030.0" layoutY="624.0" visible="false">
+                      <children>
+                        <Button id="st2Plus" fx:id="superHerstellen" font="$x5" layoutX="178.0" layoutY="3.0" mnemonicParsing="false" onMousePressed="#handleButtonActionTruppenPlus" prefHeight="21.0" prefWidth="77.0" text="HERSTELLEN">
+                          <tooltip>
+                            <Tooltip text="Empty Tooltip" fx:id="tooltipp8" />
+                          </tooltip>
+                        </Button>
+                        <Label id="leichteTruppen2" fx:id="superName" font="$x2" layoutX="0.0" layoutY="6.0" prefWidth="145.0" text="LT2" />
+                        <Label id="mehlAnzahl" fx:id="superAnzahl" font="$x3" layoutX="150.0" layoutY="6.0" prefWidth="20.0" text="LT2Anzahl" />
+                        <Label id="mehlAnzahl" fx:id="superiaAnzahl" font="$x3" layoutX="262.0" layoutY="0.0" prefHeight="23.5687255859375" prefWidth="59.0" text="XXX" />
+                      </children>
+                    </Group>
+                    <TextField fx:id="standortName" layoutX="358.0" layoutY="41.0" prefWidth="200.0" />
+                    <Button fx:id="nameAendern" layoutX="558.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleButtonActionNameAendern" prefWidth="70.0" text="Aendern" />
+                    <Label fx:id="nameAendernFail" layoutX="400.0" layoutY="19.0" text="Name ist ungueltig!" textFill="$x11" visible="false" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Karte">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="557.0" prefWidth="807.0" styleClass="darkPane">
+                  <children>
+                    <Line endX="-104.0" endY="642.0" layoutX="1068.0" layoutY="39.0" startX="-103.0" startY="-39.0" />
+                    <Rectangle fx:id="karte00" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte01" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte02" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte03" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte04" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte05" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte06" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte07" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte08" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="77.0" width="60.0" />
+                    <Rectangle fx:id="karte10" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte11" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte12" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte13" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte14" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte15" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte16" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte17" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte18" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="137.0" width="60.0" />
+                    <Rectangle fx:id="karte20" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte21" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte22" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte23" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte24" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte25" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte26" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte27" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte28" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="197.0" width="60.0" />
+                    <Rectangle fx:id="karte30" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte31" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte32" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte33" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte34" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte35" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte36" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte37" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte38" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="257.0" width="60.0" />
+                    <Rectangle fx:id="karte40" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte41" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte42" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte43" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte44" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte45" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte46" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte47" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte48" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="317.0" width="60.0" />
+                    <Rectangle fx:id="karte50" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte51" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte52" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte53" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte54" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte55" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte56" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte57" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte58" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="377.0" width="60.0" />
+                    <Rectangle fx:id="karte60" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte61" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte62" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte63" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte64" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte65" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte66" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte67" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte68" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="437.0" width="60.0" />
+                    <Rectangle fx:id="karte70" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte71" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte72" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte73" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte74" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte75" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte76" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte77" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte78" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="497.0" width="60.0" />
+                    <Rectangle fx:id="karte80" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="264.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte81" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="324.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte82" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="384.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte83" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="444.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte84" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="504.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte85" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="564.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte86" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="624.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte87" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="684.0" layoutY="557.0" width="60.0" />
+                    <Rectangle fx:id="karte88" arcHeight="5.0" arcWidth="5.0" fill="GREEN" height="60.0" layoutX="744.0" layoutY="557.0" width="60.0" />
+                    <Button fx:id="aktualisiere3" layoutX="469.0" layoutY="40.0" mnemonicParsing="false" onAction="#aktualisiereGUI" text="aktualisiere" />
+                    <ImageView fitHeight="116.0" fitWidth="112.0" layoutX="1157.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/current.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="116.0" fitWidth="112.0" layoutX="1157.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/own.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="116.0" fitWidth="112.0" layoutX="1157.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/enemy.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="116.0" fitWidth="112.0" layoutX="1157.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/alli.png" />
+                      </image>
+                    </ImageView>
+                    <Label layoutX="999.0" layoutY="119.0" text="aktueller Standort" />
+                    <Label layoutX="999.0" layoutY="241.0" text="eigener Standort" />
+                    <Label layoutX="999.0" layoutY="390.0" text="gegnerischer Standort" />
+                    <Label layoutX="999.0" layoutY="508.0" prefHeight="17.0" prefWidth="114.0" text="verbuendeter Standort" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="franchiseTab" text="Franchise">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="darkPane">
+                  <children>
+                    <VBox id="VBox" alignment="CENTER" layoutX="20.0" layoutY="53.0" spacing="5.0">
+                      <children>
+                        <Label font="$x1" text="Mitglieder" />
+                        <ListView id="Standorte" fx:id="mitgliederID" cache="false" disable="false" editable="false" orientation="VERTICAL" prefHeight="499.0" prefWidth="260.0" styleClass="darkList">
+                          <stylesheets>
+                            <URL value="@../CSS/IssueTrackingLite.css" />
+                          </stylesheets>
+                        </ListView>
+                      </children>
+                    </VBox>
+                    <VBox id="VBox" alignment="CENTER" layoutX="340.0" layoutY="53.0" spacing="5.0">
+                      <children>
+                        <Label font="$x1" text="Ankuendigungen" />
+                        <ListView id="Standorte" fx:id="ankuendigungenID" cache="false" disable="false" editable="true" orientation="VERTICAL" prefHeight="499.0" prefWidth="260.0" styleClass="darkList">
+                          <stylesheets>
+                            <URL value="@../CSS/IssueTrackingLite.css" />
+                          </stylesheets>
+                        </ListView>
+                      </children>
+                    </VBox>
+                    <VBox id="VBox" alignment="CENTER" layoutX="973.0" layoutY="53.0" spacing="5.0">
+                      <children>
+                        <Label id="boniID" font="$x1" text="Aktuelle Boni" />
+                        <ListView id="Standorte" fx:id="boniID" cache="false" disable="false" editable="false" orientation="VERTICAL" prefHeight="499.0" prefWidth="260.0" styleClass="darkList">
+                          <stylesheets>
+                            <URL value="@../CSS/IssueTrackingLite.css" />
+                          </stylesheets>
+                        </ListView>
+                      </children>
+                    </VBox>
+                    <Label font="$x1" layoutX="736.0" layoutY="59.0" text="Forschung" />
+                    <Button fx:id="aktualisiere2" layoutX="627.0" layoutY="628.0" mnemonicParsing="false" onAction="#aktualisiereGUI" text="Aktualisiere" />
+                    <Label fx:id="franchiseTName" layoutX="487.0" layoutY="14.0" prefHeight="17.0" prefWidth="346.0" text="Name Des Franchises">
+                      <font>
+                        <Font name="System Bold" size="20.0" />
+                      </font>
+                    </Label>
+                    <Label fx:id="franchiseTCEO" layoutX="74.0" layoutY="14.0" prefHeight="17.0" prefWidth="112.0" text="ceo" />
+                    <Label layoutX="20.0" layoutY="14.0" prefHeight="17.0" prefWidth="40.0" text="CEO:" />
+                    <ImageView fitHeight="498.0" fitWidth="364.0" layoutX="611.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/FR.png" />
+                      </image>
+                    </ImageView>
+                    <Circle fx:id="GA" disable="true" fill="DODGERBLUE" layoutX="787.0" layoutY="129.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GB" disable="true" fill="DODGERBLUE" layoutX="738.0" layoutY="177.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GC" disable="true" fill="DODGERBLUE" layoutX="835.0" layoutY="177.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GD" disable="true" fill="DODGERBLUE" layoutX="786.0" layoutY="224.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GH" disable="true" fill="DODGERBLUE" layoutX="690.0" layoutY="274.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GE" disable="true" fill="DODGERBLUE" layoutX="883.0" layoutY="274.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GI" disable="true" fill="DODGERBLUE" layoutX="642.0" layoutY="353.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GJ" disable="true" fill="DODGERBLUE" layoutX="738.0" layoutY="353.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GF" disable="true" fill="DODGERBLUE" layoutX="835.0" layoutY="353.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GG" disable="true" fill="DODGERBLUE" layoutX="931.0" layoutY="353.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GK" disable="true" fill="DODGERBLUE" layoutX="642.0" layoutY="441.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GO" disable="true" fill="DODGERBLUE" layoutX="642.0" layoutY="529.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GL" disable="true" fill="DODGERBLUE" layoutX="738.0" layoutY="441.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GP" disable="true" fill="DODGERBLUE" layoutX="738.0" layoutY="529.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GM" disable="true" fill="DODGERBLUE" layoutX="834.0" layoutY="441.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GQ" disable="true" fill="DODGERBLUE" layoutX="835.0" layoutY="529.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GN" disable="true" fill="DODGERBLUE" layoutX="931.0" layoutY="441.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GR" disable="true" fill="DODGERBLUE" layoutX="931.0" layoutY="529.0" onMousePressed="#knotenKlickForschung" radius="23.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="GS" disable="true" fill="DODGERBLUE" layoutX="790.0" layoutY="560.0" onMousePressed="#knotenKlickForschung" radius="18.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" visible="false" />
+                    <Label layoutX="1095.0" layoutY="23.0" text="Franchisekasse:" />
+                    <Label fx:id="franchisekasse" layoutX="1197.0" layoutY="23.0" prefHeight="17.0" prefWidth="58.0" text="\$€" />
+                    <Button fx:id="einzahlen" layoutX="1012.0" layoutY="19.0" mnemonicParsing="false" onAction="#geldEinzahlen" text="einzahlen" />
+                    <TextField fx:id="geldmenge" layoutX="905.0" layoutY="19.0" prefHeight="25.0" prefWidth="95.0" />
+                    <Label fx:id="geldEinzahlenError" layoutX="891.0" prefHeight="17.0" prefWidth="299.0" />
+                    <Label fx:id="keinGeld" layoutX="624.0" layoutY="578.0" prefHeight="17.0" prefWidth="330.0" textFill="RED" />
+                    <Button fx:id="ankuendigungenSpeichern" layoutX="434.0" layoutY="581.0" mnemonicParsing="false" onAction="#handleButtonActionAnkuendigungenSpeichern" text="Speichern" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="forschungTab" text="Forschung">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="darkPane">
+                  <children>
+                    <ImageView fx:id="charakterBaumView" fitHeight="746.0" fitWidth="518.0" layoutX="39.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/CD.png" />
+                      </image>
+                    </ImageView>
+                    <Circle fx:id="CA" disable="true" fill="DODGERBLUE" layoutX="298.0" layoutY="114.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CB" disable="true" fill="DODGERBLUE" layoutX="227.0" layoutY="184.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CC" disable="true" fill="DODGERBLUE" layoutX="369.0" layoutY="185.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CD" disable="true" fill="DODGERBLUE" layoutX="298.0" layoutY="256.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CH" disable="true" fill="DODGERBLUE" layoutX="156.0" layoutY="326.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CE" disable="true" fill="DODGERBLUE" layoutX="440.0" layoutY="326.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CI" disable="true" fill="DODGERBLUE" layoutX="85.0" layoutY="444.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CJ" disable="true" fill="DODGERBLUE" layoutX="227.0" layoutY="444.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CF" disable="true" fill="DODGERBLUE" layoutX="369.0" layoutY="444.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CG" disable="true" fill="DODGERBLUE" layoutX="512.0" layoutY="444.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CL" disable="true" fill="DODGERBLUE" layoutX="227.0" layoutY="574.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CK" disable="true" fill="DODGERBLUE" layoutX="85.0" layoutY="574.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CM" disable="true" fill="DODGERBLUE" layoutX="369.0" layoutY="574.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CP" disable="true" fill="DODGERBLUE" layoutX="227.0" layoutY="703.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CO" disable="true" fill="DODGERBLUE" layoutX="85.0" layoutY="703.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CN" disable="true" fill="DODGERBLUE" layoutX="512.0" layoutY="574.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CQ" disable="true" fill="DODGERBLUE" layoutX="369.0" layoutY="703.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CR" disable="true" fill="DODGERBLUE" layoutX="511.0" layoutY="703.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <ImageView fx:id="fraktionsBaumView" fitHeight="723.0" fitWidth="534.0" layoutX="691.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/FM.png" />
+                      </image>
+                    </ImageView>
+                    <Circle fx:id="FR" disable="true" fill="DODGERBLUE" layoutX="1155.0" layoutY="699.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FQ" disable="true" fill="DODGERBLUE" layoutX="1016.0" layoutY="699.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FN" disable="true" fill="DODGERBLUE" layoutX="1155.0" layoutY="571.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FO" disable="true" fill="DODGERBLUE" layoutX="736.0" layoutY="699.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FP" disable="true" fill="DODGERBLUE" layoutX="875.0" layoutY="699.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FM" disable="true" fill="DODGERBLUE" layoutX="1016.0" layoutY="571.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FL" disable="true" fill="DODGERBLUE" layoutX="875.0" layoutY="571.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FK" disable="true" fill="DODGERBLUE" layoutX="736.0" layoutY="571.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FG" disable="true" fill="DODGERBLUE" layoutX="1155.0" layoutY="443.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FF" disable="true" fill="DODGERBLUE" layoutX="1015.0" layoutY="443.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FJ" disable="true" fill="DODGERBLUE" layoutX="875.0" layoutY="443.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FI" disable="true" fill="DODGERBLUE" layoutX="736.0" layoutY="443.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FE" disable="true" fill="DODGERBLUE" layoutX="1086.0" layoutY="328.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FH" disable="true" fill="DODGERBLUE" layoutX="806.0" layoutY="328.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FD" disable="true" fill="DODGERBLUE" layoutX="946.0" layoutY="258.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FC" disable="true" fill="DODGERBLUE" layoutX="1016.0" layoutY="188.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FB" disable="true" fill="DODGERBLUE" layoutX="876.0" layoutY="188.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="FA" disable="true" fill="DODGERBLUE" layoutX="946.0" layoutY="118.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Circle fx:id="CS" disable="true" fill="DODGERBLUE" layoutX="320.0" layoutY="842.0" onMousePressed="#knotenKlickForschung" radius="30.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" visible="false" />
+                    <Circle fx:id="FS" disable="true" fill="DODGERBLUE" layoutX="942.0" layoutY="357.0" onMousePressed="#knotenKlickForschung" radius="33.0" stroke="BLACK" strokeType="INSIDE" style="-fx-cursor: hand;" />
+                    <Button fx:id="aktualisiere4" layoutX="557.0" layoutY="29.0" mnemonicParsing="false" onAction="#aktualisiereGUI" prefHeight="25.0" prefWidth="145.0" text="aktualisiere" />
+                    <Label layoutX="217.0" layoutY="24.0" text="Charakterbaum">
+                      <font>
+                        <Font size="24.0" fx:id="x10" />
+                      </font>
+                    </Label>
+                    <Label font="$x10" layoutX="868.0" layoutY="24.0" text="Fraktionsbaum" />
+                    <Label fx:id="forschenFehler" layoutX="522.0" layoutY="110.0" prefHeight="17.0" prefWidth="239.0" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="nachrichtenTabID" onSelectionChanged="#ladeNachrichten" text="Nachrichten">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="darkPane">
+                  <children>
+                    <TabPane fx:id="nachrichtTabPane" layoutX="42.0" layoutY="56.0" prefHeight="614.0" prefWidth="1030.0" styleClass="darkPane" tabClosingPolicy="UNAVAILABLE">
+                      <stylesheets>
+                        <URL value="@../CSS/IssueTrackingLite.css" />
+                      </stylesheets>
+                      <tabs>
+                        <Tab fx:id="erhalteneNachrichtenTab" onSelectionChanged="#aktualisiereNachrichtenTab" text="Erhaltene Nachrichten">
+                          <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="284.0000999999975" prefWidth="518.9998779296875" styleClass="darkPane">
+                              <children>
+                                <TableView id="neueNachrichtenID" fx:id="erhalteneNachrichtenID" editable="true" layoutX="0.0" layoutY="0.0" prefHeight="525.0" prefWidth="1029.0" tableMenuButtonVisible="false">
+                                  <columns>
+                                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="180.0" resizable="false" text="Absender" fx:id="erhalteneNachrichtenAbsenderID" />
+                                    <TableColumn id="NachrichtID" maxWidth="5000.0" minWidth="10.0" prefWidth="180.0" resizable="false" sortable="true" text="Empfaenger" fx:id="erhalteneNachrichtenEmpfaengerID" />
+                                    <TableColumn minWidth="800.0" prefWidth="800.0" resizable="false" text="Nachricht" fx:id="erhalteneNachrichtenTextID" />
+                                  </columns>
+                                  <stylesheets>
+                                    <URL value="@../CSS/IssueTrackingLite-Listen.css" />
+                                  </stylesheets>
+                                </TableView>
+                              </children>
+                              <stylesheets>
+                                <URL value="@../CSS/IssueTrackingLite.css" />
+                              </stylesheets>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab fx:id="gesendeteNachrichtenTab" onSelectionChanged="#aktualisiereNachrichtenTab" text="Gesendete Nachrichten">
+                          <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="536.0" prefWidth="1027.0" styleClass="darkPane">
+                              <children>
+                                <TableView id="neueNachrichtenID" fx:id="gesendeteNachrichtenID" editable="true" layoutX="0.0" layoutY="0.0" prefHeight="526.0" prefWidth="1030.0" tableMenuButtonVisible="false">
+                                  <columns>
+                                    <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="180.0" resizable="false" text="Absender" fx:id="gesendeteNachrichtenAbsenderID" />
+                                    <TableColumn id="NachrichtID" maxWidth="5000.0" minWidth="10.0" prefWidth="181.0" resizable="false" sortable="true" text="Empfaenger" fx:id="gesendeteNachrichtenEmpfaengerID" />
+                                    <TableColumn minWidth="800.0" prefWidth="800.0" resizable="false" text="Nachricht" fx:id="gesendeteNachrichtenTextID" />
+                                  </columns>
+                                  <stylesheets>
+                                    <URL value="@../CSS/IssueTrackingLite-Listen.css" />
+                                  </stylesheets>
+                                </TableView>
+                              </children>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab id="neueNachrichtTab" fx:id="neueNachrichtTab" onSelectionChanged="#neueNachrichtFenster" text="Neue Nachricht">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="darkTable">
+                              <children>
+                                <TextField id="empfangerFeld" fx:id="empfaengerFeld" layoutX="437.0" layoutY="192.0" promptText="Empfaenger" />
+                                <Button fx:id="sendenButton" layoutX="428.0" layoutY="328.0" mnemonicParsing="false" onAction="#sendeNachrichtAction" text="Senden" />
+                                <Label layoutX="352.0" layoutY="196.0" text="Empfaenger:" />
+                                <Label fx:id="versendetLabel" layoutX="470.0" layoutY="376.0" text="Erfolgsmeldung" />
+                                <TextField fx:id="nachrichtenTextFeld" layoutX="172.0" layoutY="274.0" onKeyPressed="#nachrichtlaengePruefenAction" prefHeight="25.0" prefWidth="687.0" promptText="Nachricht" />
+                                <Label layoutX="428.0" layoutY="240.0" text="Nachricht: (maximal 100 Zeichen)" />
+                                <Button fx:id="nachrichtBearbeitenButton" layoutX="534.0" layoutY="328.0" mnemonicParsing="false" onAction="#nachrichtBearbeitenAction" text="Bearbeiten" />
+                              </children>
+                            </AnchorPane>
+                          </content>
+                        </Tab>
+                      </tabs>
+                    </TabPane>
+                    <Button fx:id="neueNachrichtButton" layoutX="42.0" layoutY="14.0" mnemonicParsing="false" onAction="#neueNachrichtAction" text="Neue Nachricht">
+                      <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                      </tooltip>
+                    </Button>
+                    <Button id="aktualisiereNachrichten" fx:id="aktualisiereNachrichtenButton" layoutX="152.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonActionAktualisieren" text="Aktualisiere" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Shop">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="112.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster1.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="412.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster2.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="697.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster3.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="996.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster4.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="996.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster5.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="697.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster6.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="412.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster7.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="112.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster8.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="112.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster9.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="412.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster10.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fitHeight="218.0" fitWidth="150.0" layoutX="697.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/Booster11.png" />
+                      </image>
+                    </ImageView>
+                    <ImageView fx:id="booster11" fitHeight="218.0" fitWidth="150.0" layoutX="996.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../Bilder/voucher.png" />
+                      </image>
+                    </ImageView>
+                    <Button fx:id="kaufen00" layoutX="138.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen01" layoutX="438.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen02" layoutX="723.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen03" layoutX="1022.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen04" layoutX="1022.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen05" layoutX="723.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen06" layoutX="438.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen07" layoutX="138.0" layoutY="386.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen08" layoutX="138.0" layoutY="587.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen09" layoutX="438.0" layoutY="587.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen10" layoutX="723.0" layoutY="587.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Button fx:id="kaufen11" layoutX="1022.0" layoutY="587.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="kaufen" />
+                    <Label fx:id="storeError" layoutX="458.0" layoutY="617.0" prefHeight="17.0" prefWidth="389.0" textFill="#ff0606" />
+                    <Label layoutX="1115.0" layoutY="480.0" prefHeight="47.0" prefWidth="157.0" rotate="90.0" text="Spezial!">
+                      <font>
+                        <Font size="36.0" fx:id="x9" />
+                      </font>
+                    </Label>
+                    <Label layoutX="994.0" layoutY="625.0" text="(charakterspezifischer Bonus)" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="franchiseGruenden" text="Franchise gruenden/beitreten">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <TextField fx:id="franchiseName" layoutX="477.0" layoutY="155.0" prefHeight="25.0" prefWidth="313.0" promptText="Name des Franchise" />
+                    <Button fx:id="franchiseGruendenButton" layoutX="472.0" layoutY="259.0" mnemonicParsing="false" onAction="#franchiseErstellen" prefHeight="25.0" prefWidth="162.0" text="Gruenden" />
+                    <Label layoutX="334.0" layoutY="159.0" prefHeight="17.0" prefWidth="97.0" text="Franchise Name :" />
+                    <Label fx:id="franchiseGruendenFehler" layoutX="480.0" layoutY="192.0" prefHeight="30.0" prefWidth="309.0" textFill="RED" />
+                    <Button fx:id="franchiseBeitretenButton" layoutX="659.0" layoutY="259.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Beitreten" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="handelsPostenTabID" onSelectionChanged="#ladeHandelsposten" text="Handelsposten">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <TableView fx:id="handelsPostenView" layoutX="92.0" layoutY="68.0" prefHeight="496.0" prefWidth="1000.0">
+                      <columns>
+                        <TableColumn prefWidth="120.0" resizable="false" text="Anbieter" fx:id="anbieterID" />
+                        <TableColumn prefWidth="330.0" resizable="false" text="Angebotene Ressource" fx:id="angebotID" />
+                        <TableColumn minWidth="0.0" prefWidth="70.0" resizable="false" text="Menge" fx:id="angebotsMengeID" />
+                        <TableColumn minWidth="0.0" prefWidth="330.0" resizable="false" text="Verlangte Ressource" fx:id="verlangteRessourceID" />
+                        <TableColumn minWidth="0.0" prefWidth="70.0" resizable="false" text="Menge" fx:id="angebotsPreisID" />
+                        <TableColumn resizable="false" text="AuktionsID" fx:id="auktionsIDSpalte" />
+                      </columns>
+                    </TableView>
+                    <Button fx:id="aktualisiereAuktionenButton" layoutX="562.0" layoutY="26.0" mnemonicParsing="false" onAction="#aktualisiereAuktionen" text="Aktualisiere" />
+                    <Button fx:id="auktionAbschliessenButton" layoutX="92.0" layoutY="580.0" mnemonicParsing="false" onAction="#auktionAbschliessen" text="Ausgewaehlte Auktion kaufen" />
+                    <Button fx:id="auktionAbbrechenButton" layoutX="913.0" layoutY="580.0" mnemonicParsing="false" onAction="#auktionAbbrechen" text="Ausgewaehlte Auktion loeschen" />
+                    <ComboBox fx:id="neueAuktionAngebot" layoutX="287.0" layoutY="648.0" prefHeight="25.0" prefWidth="221.0" promptText="Angebotene Ressource" />
+                    <TextField fx:id="neueAuktionAngebotsmenge" layoutX="537.0" layoutY="648.0" prefHeight="25.0" prefWidth="72.0" promptText="Menge" />
+                    <ComboBox fx:id="neueAuktionGebot" layoutX="633.0" layoutY="648.0" prefHeight="25.0" prefWidth="221.0" promptText="Verlangte Ressource" />
+                    <TextField fx:id="neueAuktionGebotsmenge" layoutX="873.0" layoutY="648.0" prefHeight="25.0" prefWidth="73.0" promptText="Menge" />
+                    <Button fx:id="auktionErstellenButton" layoutX="484.0" layoutY="694.0" mnemonicParsing="false" onAction="#auktionErstellen" prefHeight="25.0" prefWidth="179.0" text="Auktion erstellen" />
+                    <Label layoutX="116.0" layoutY="631.0" text="Neue Auktion anlegen:" />
+                    <Label fx:id="systemnachrichtAuktionLabel" layoutX="539.0" layoutY="584.0" text="Systemnachrichten" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="kampfTab" onSelectionChanged="#kampfTabAusAction" text="Truppenbewegung">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <Label font="$x9" layoutX="492.0" layoutY="38.0" text="Waehle deine Truppen:" />
+                    <Label layoutX="81.0" layoutY="113.0" text="Standort in Aktion:">
+                      <font>
+                        <Font size="18.0" fx:id="x8" />
+                      </font>
+                    </Label>
+                    <Label fx:id="angreifenderStandortLabel" font="$x8" layoutX="307.0" layoutY="113.0" text="Standortname" />
+                    <Label font="$x8" layoutX="79.0" layoutY="215.0" text="Auswahl (Spieler):" />
+                    <Label fx:id="zielSpielerLabel" font="$x8" layoutX="314.0" layoutY="215.0" text="Spielername" />
+                    <Label font="$x8" layoutX="72.0" layoutY="283.0" text="Auswahl (Standort):" />
+                    <Label fx:id="zielStandortLabel" font="$x8" layoutX="307.0" layoutY="283.0" text="Standortname" />
+                    <Button fx:id="ueberfallButton" font="$x8" layoutX="215.0" layoutY="329.0" mnemonicParsing="false" onAction="#ueberfallAction" text="Ueberfall!" />
+                    <Button fx:id="uebernahmeButton" font="$x8" layoutX="200.0" layoutY="432.0" mnemonicParsing="false" onAction="#uebernahmeAction" text="Uebernahme!" />
+                    <Label font="$x8" layoutX="818.0" layoutY="100.0" text="Truppen-Auswahl:" />
+                    <Label font="$x8" layoutX="611.0" layoutY="170.0" text="Leichte Truppen:" />
+                    <Label fx:id="kampfLeicht1Label" layoutX="697.0" layoutY="217.0" text="Truppe1" />
+                    <Label fx:id="kampfLeicht2Label" layoutX="697.0" layoutY="254.0" text="Truppe2" />
+                    <Label layoutX="700.0" layoutY="340.0" text="Tablet" />
+                    <Label layoutX="703.0" layoutY="377.0" text="LKW" />
+                    <Label font="$x8" layoutX="611.0" layoutY="424.0" text="Mittlere Truppen:" />
+                    <Label fx:id="kampfMittel1Label" layoutX="700.0" layoutY="467.0" text="Truppe1" />
+                    <Label fx:id="kampfMittel2Label" layoutX="700.0" layoutY="520.0" text="Truppe2" />
+                    <Label font="$x8" layoutX="609.0" layoutY="568.0" text="Schwere Truppen:" />
+                    <Label fx:id="kampfSchwer1Label" layoutX="700.0" layoutY="625.0" text="Truppe1" />
+                    <Label fx:id="kampfSchwer2Label" layoutX="700.0" layoutY="672.0" text="Truppe2" />
+                    <Label fx:id="KampfSuperLabel" layoutX="689.0" layoutY="724.0" text="Supereinheit" />
+                    <Label fx:id="kampfLeicht1AnzahlLabel" layoutX="876.0" layoutY="217.0" text="XXX" />
+                    <Label fx:id="kampfLeicht2AnzahlLabel" layoutX="876.0" layoutY="254.0" text="XXX" />
+                    <Label fx:id="kampfTabletAnzahlLabel" layoutX="873.0" layoutY="340.0" text="XXX" />
+                    <Label fx:id="kampfLKWAnzahlLabel" layoutX="873.0" layoutY="377.0" text="XXX" />
+                    <Label fx:id="kampfMittel1AnzahlLabel" layoutX="879.0" layoutY="467.0" text="XXX" />
+                    <Label fx:id="kampfMittel2AnzahlLabel" layoutX="879.0" layoutY="520.0" text="XXX" />
+                    <Label fx:id="kampfSchwer1AnzahlLabel" layoutX="879.0" layoutY="625.0" text="XXX" />
+                    <Label fx:id="kampfSchwer2AnzahlLabel" layoutX="879.0" layoutY="672.0" text="XXX" />
+                    <Label fx:id="kampfSuperAnzahlLabel" layoutX="879.0" layoutY="724.0" text="XXX" />
+                    <CheckBox fx:id="kampfSuperCheckbox" layoutX="980.0" layoutY="724.0" mnemonicParsing="false" />
+                    <Button fx:id="kampfPlusL1Button" layoutX="973.0" layoutY="213.0" mnemonicParsing="false" onAction="#kampfPlusL1Action" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfMinusL1Button" layoutX="1008.0" layoutY="213.0" mnemonicParsing="false" onAction="#kampfMinusL1Action" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfPlusL2Button" layoutX="973.0" layoutY="250.0" mnemonicParsing="false" onAction="#kampfPlusL2Action" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfPlusTButton" layoutX="970.0" layoutY="336.0" mnemonicParsing="false" onAction="#kampfPlusTAction" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfPlusLKWButton" layoutX="971.0" layoutY="373.0" mnemonicParsing="false" onAction="#kampfPlusLKWAction" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfPlusM1Button" layoutX="976.0" layoutY="463.0" mnemonicParsing="false" onAction="#kampfPlusM1Action" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfPlusM2Button" layoutX="976.0" layoutY="516.0" mnemonicParsing="false" onAction="#kampfPlusM2Action" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfPlusS1Button" layoutX="976.0" layoutY="621.0" mnemonicParsing="false" onAction="#kampfPlusS1Action" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfPlusS2Button" layoutX="976.0" layoutY="668.0" mnemonicParsing="false" onAction="#kampfPlusS2Action" prefHeight="25.0" prefWidth="28.0" text="+" />
+                    <Button fx:id="kampfMinusL2Button" layoutX="1008.0" layoutY="250.0" mnemonicParsing="false" onAction="#kampfMinusL2Action" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfMinusTButton" layoutX="1005.0" layoutY="336.0" mnemonicParsing="false" onAction="#kampfMinusTAction" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfMinusLKWButton" layoutX="1005.0" layoutY="373.0" mnemonicParsing="false" onAction="#kampfMinusLKWAction" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfMinusM1Button" layoutX="1011.0" layoutY="463.0" mnemonicParsing="false" onAction="#kampfMinusM1Action" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfMinusM2Button" layoutX="1011.0" layoutY="516.0" mnemonicParsing="false" onAction="#kampfMinusM2Action" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfMinusS1Button" layoutX="1011.0" layoutY="621.0" mnemonicParsing="false" onAction="#kampfMinusS1Action" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="kampfMinusS2Button" layoutX="1011.0" layoutY="668.0" mnemonicParsing="false" onAction="#kampfMinusS2Action" prefHeight="25.0" prefWidth="28.0" text="-" />
+                    <Button fx:id="truppenTransferButton" font="$x8" layoutX="217.0" layoutY="541.0" mnemonicParsing="false" onAction="#truppenTransferAction" text="Transfer" />
+                    <Label fx:id="kampfErfolgLabel" layoutX="231.0" layoutY="668.0" text="kampfErfolg" />
+                    <Label layoutX="1121.0" layoutY="175.0" text="Vorhanden:" />
+                    <Label fx:id="kampfLeicht1AnzahlLabel1" layoutX="1141.0" layoutY="217.0" text="XXX" />
+                    <Label fx:id="kampfLeicht2AnzahlLabel1" layoutX="1141.0" layoutY="254.0" text="XXX" />
+                    <Label fx:id="kampfTabletAnzahlLabel1" layoutX="1138.0" layoutY="340.0" text="XXX" />
+                    <Label fx:id="kampfLKWAnzahlLabel1" layoutX="1138.0" layoutY="377.0" text="XXX" />
+                    <Label fx:id="kampfMittel1AnzahlLabel1" layoutX="1144.0" layoutY="467.0" text="XXX" />
+                    <Label fx:id="kampfMittel2AnzahlLabel1" layoutX="1144.0" layoutY="520.0" text="XXX" />
+                    <Label fx:id="kampfSchwer1AnzahlLabel1" layoutX="1144.0" layoutY="625.0" text="XXX" />
+                    <Label fx:id="kampfSchwer2AnzahlLabel1" layoutX="1144.0" layoutY="672.0" text="XXX" />
+                    <Label fx:id="kampfSuperAnzahlLabel1" layoutX="1144.0" layoutY="724.0" text="XXX" />
+                    <Label font="$x8" layoutX="590.0" layoutY="297.0" text="Transport-Truppen:" />
+                    <Label layoutX="642.0" layoutY="749.0" text="(Kann nicht transferiert werden)" />
+                    <Label layoutX="58.0" layoutY="377.0" text="Ueberfaellt Ziel-Standort. Mit einem LKW koennen Ressourcen erbeutet werden!" />
+                    <Label fx:id="uebernahmeTextLabel" layoutX="88.0" layoutY="488.0" text="Uebernimmt den Ziel-Standort. Eine Rechtsabteilung wird benoetigt!" />
+                    <Label layoutX="127.0" layoutY="595.0" text="Verschickt ausgewaehlte Truppen zum Ziel-Standort!" />
+                    <Label layoutX="741.0" layoutY="140.0" text="(Mindestens: 1 Truppe und 1 Tablet pro 10 Truppen)" />
+                    <Button fx:id="aktualisiereTruppenAnzahlButton" layoutX="1113.0" layoutY="136.0" mnemonicParsing="false" onAction="#aktualisiereTruppenAnzahlAction" text="Aktualisiere" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Impressum">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <TextArea editable="false" layoutX="112.0" layoutY="20.0" prefHeight="200.0" prefWidth="573.0" text="Quellen:&#10;Fleischsymbol, Gemuese, Mehl, Geld: http://www.flaticon.com/authors/madebyoliver&#10;Gutscheinesymbol + Gebaeude(Map): http://www.flaticon.com/authors/freepik&#10;http://www.flaticon.com/authors/baianat&#10;https://pixabay.com/&#10;commons.wikimedia.org&#10;&#10;&#10;" />
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+          </tabs>
+        </TabPane>
+        <Label id="geldAnzahl" fx:id="gutscheineAnzahl" layoutX="1100.0" layoutY="5.0" prefWidth="114.0" text="" />
+        <Label fx:id="geldAnzahl" layoutX="900.0" layoutY="5.0" prefWidth="112.0" text="" />
+        <ImageView fitHeight="21.0" fitWidth="42.0" layoutX="870.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../Bilder/money.png" />
+          </image>
+        </ImageView>
+        <ImageView fitHeight="19.99999713897705" fitWidth="42.24999331348939" layoutX="1070.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../Bilder/voucher.png" />
+          </image>
+        </ImageView>
+      </children>
+      <stylesheets>
+        <URL value="@../CSS/IssueTrackingLite.css" />
+      </stylesheets>
+    </Pane>
+  </children>
+  <columnConstraints>
+    <ColumnConstraints />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+  </rowConstraints>
+</GridPane>

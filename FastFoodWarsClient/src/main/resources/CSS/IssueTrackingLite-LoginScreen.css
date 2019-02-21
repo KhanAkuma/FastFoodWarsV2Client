@@ -1,0 +1,17 @@
+.darkList {
+    -fx-background-color: black;
+}
+
+.darkList .list-cell {
+    -fx-padding: 6 0 0 13;
+    -fx-background-color: #d2b48c;
+    -fx-text-fill: lightgrey;
+}
+
+.darkList .list-cell:focused {
+    -fx-text-fill: white;
+}
+
+.darkPane {
+    -fx-background-color: #ffe4c4
+}
